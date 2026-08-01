@@ -25,3 +25,7 @@ Shows changelog information #>
 function changelog {
     Get-Content .\changelog.md
 }
+
+function API {
+    Invoke-RestMethod http://localhost:5000/api/users
+}
