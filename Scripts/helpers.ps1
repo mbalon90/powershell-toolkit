@@ -5,7 +5,7 @@ Listing All Main Functions #>
 function Get-Functions {
     $tokens = $null
     $errors = $null
-    $ast = [System.Management.Automation.Language.Parser]::ParseFile("$PSScriptRoot\functions.ps1", [ref]$tokens, [ref]$errors)
+    $ast = [System.Management.Automation.Language.Parser]::ParseFile("$PSScriptRoot\Scripts\functions.ps1", [ref]$tokens, [ref]$errors)
 
     $functions = $ast.FindAll({
             param($node)
