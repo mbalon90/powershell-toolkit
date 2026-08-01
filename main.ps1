@@ -4,6 +4,7 @@
 $Version = "0.3"
 
 # Load helper functions and modules
+. "$PSScriptRoot\Scripts\api.ps1"
 . "$PSScriptRoot\Scripts\helpers.ps1"
 . "$PSScriptRoot\Scripts\functions.ps1"
 
