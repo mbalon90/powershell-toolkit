@@ -3,10 +3,14 @@
 <# .DESCRIPTION
 Shows welcome logo #>
 function welcome {
+    param(
+        [string]$Version
+    )
+
     clear-host
     $line = "=" * 24
     Write-Host $line -ForegroundColor Green
-    Write-Host " Scripting Toolkit v$($version)"-ForegroundColor Green
+    Write-Host " Scripting Toolkit v$Version"-ForegroundColor Green
     Write-Host " Get-Functions" -ForegroundColor Green
     Write-Host $line -ForegroundColor Green
 }
