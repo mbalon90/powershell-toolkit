@@ -1,13 +1,14 @@
 # PowerShell Scripts and Functions
-A small PowerShell sandbox repository for reusable scripts, helper functions, and experiments. It helps keep PowerShell code organized, testable, and easy to reuse across projects.
+A small PowerShell sandbox repository for reusable scripts, helper functions, and experiments. 
+It helps keep PowerShell code organized, testable, and easy to reuse across projects.
 
 ## Overview
 This repository contains PowerShell scripts, reusable functions, and helper utilities.
 
 The main goal is to:
-- keep shared logic in one place.
-- make scripts easier to read and maintain.
-- provide a simple place for testing PowerShell ideas.
+- Keep shared logic in one place.
+- Make scripts easier to read and maintain.
+- Provide a simple place for testing PowerShell ideas.
 
 ## Repository structure
 - `main.ps1` — entry point script.
