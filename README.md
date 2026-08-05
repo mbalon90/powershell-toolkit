@@ -12,9 +12,8 @@ The main goal is to:
 
 ## Repository structure
 - `main.ps1` — entry point script.
-- `functions.ps1` — reusable functions.
-- `helpers.ps1` — helper functions and supporting logic.
-- `changelog.md` — version history and changes.
+- `functions.ps1` — helper functions and supporting logic.
+- `CHANGELOG.md` — version history and changes.
 - `README.md` — repository overview and usage notes.
 
 ## Requirements

@@ -1,4 +1,25 @@
-# This file contains helper functions for the PowerShell application. It includes functions for listing all main and helper functions along with their descriptions.
+#This file contains the main functions used in the PowerShell application. It includes functions for displaying messages, version information, and welcome messages.
+
+<# .DESCRIPTION
+Shows welcome logo #>
+function Show-Logo {
+    param(
+        [string]$Version
+    )
+
+    clear-host
+    $line = "=" * 24
+    Write-Host $line -ForegroundColor Green
+    Write-Host " Scripting Toolkit v$Version"-ForegroundColor Green
+    Write-Host " Get-Functions" -ForegroundColor Green
+    Write-Host $line -ForegroundColor Green
+}
+
+<# .DESCRIPTION 
+Shows changelog information #>
+function Show-Changelog {
+    Get-Content .\CHANGELOG.md
+}
 
 <# .DESCRIPTION 
 Listing All Main Functions #>
