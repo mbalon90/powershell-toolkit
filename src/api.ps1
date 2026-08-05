@@ -1,6 +1,8 @@
+<#API Testing playgroud.#>
+
 <# .DESCRIPTION
-Shows testing api #>
-function API_Test {
+Returns testing API #>
+function Get-APITest {
     $response = Invoke-RestMethod https://jsonplaceholder.typicode.com/users
 
     $response[0].name

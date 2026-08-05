@@ -1,12 +1,11 @@
 # This script is the main entry point for the PowerShell application. It initializes the environment, loads necessary modules, and starts the application.
 
 # Define the version of the application
-$Version = "0.3"
+$Version = "0.4"
 
 # Load helper functions and modules
-. "$PSScriptRoot\Scripts\api.ps1"
-. "$PSScriptRoot\Scripts\helpers.ps1"
-. "$PSScriptRoot\Scripts\functions.ps1"
+. "$PSScriptRoot\src\api.ps1"
+. "$PSScriptRoot\src\functions.ps1"
 
 # Initialize the application
-welcome -Version $Version
+Show-Logo -Version $Version
