@@ -4,9 +4,8 @@
 $Version = "0.4"
 
 # Load helper functions and modules
-. "$PSScriptRoot\Scripts\api.ps1"
-. "$PSScriptRoot\Scripts\helpers.ps1"
-. "$PSScriptRoot\Scripts\functions.ps1"
+. "$PSScriptRoot\src\api.ps1"
+. "$PSScriptRoot\src\functions.ps1"
 
 # Initialize the application
-welcome -Version $Version
+Show-Logo -Version $Version
