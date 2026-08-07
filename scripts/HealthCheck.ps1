@@ -2,8 +2,11 @@
 Checks disk space, RAM usage, running services, Windows update status, and event log errors.
 Exports results to CSV.#>
 
-function Get-DiskHealth {
-
+function Get-DiskHealthTest {
+    [System.IO.DriveInfo]::GetDrives() |
+    Where-Object { $_.IsReady -eq $true -and $_.DriveType -eq "Fixed" } |
+    Select-Object Name, VolumeLabel, IsReady, DriveType, TotalFreeSpace, TotalSize |
+    Format-Table
 }
 
 #Don't look yet, ready-to-use function to get disk health information
