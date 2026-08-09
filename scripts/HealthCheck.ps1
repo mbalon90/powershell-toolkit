@@ -44,3 +44,14 @@ function Get-DiskHealth {
     }
     $diskHealth 
 }
+
+<# .SYNOPSIS
+    This function checks the health of the system's RAM.
+#>
+<# .DESCRIPTION
+    This function checks the health of the system's RAM by evaluating the percentage of memory used.
+#>
+function Get-RAMHealth {
+
+}
+
