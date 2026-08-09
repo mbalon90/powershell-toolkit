@@ -8,11 +8,11 @@
 # Define the version of the application
 $Version = "0.4"
 
-# Load required modules
+# Load required modules & test scripts
 . "$PSScriptRoot\src\api.ps1"
 . "$PSScriptRoot\src\functions.ps1"
 
-# Set aliases for the scripts
+# Load the health check script
 . "$PSScriptRoot\scripts\HealthCheck.ps1"
 
 # Initialize the application
