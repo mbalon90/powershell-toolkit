@@ -1,3 +1,6 @@
+
+---
+
 ## v0.1
 
 - Created functions.ps1, helpers.ps1, main.ps1 scripts
@@ -33,3 +36,5 @@
 - Added new HealthCheck function Get-HealthCheckBanner
 - Added new HealthCheck function Get-DiskHealth
 - Added new function Invoke-HealthCheck
+
+---
