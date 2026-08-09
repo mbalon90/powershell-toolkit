@@ -1,29 +1,46 @@
-<# PC Health Check Script
-Checks disk space, RAM usage, running services, Windows update status, and event log errors.
-Exports results to CSV.#>
-
-function Get-DiskHealthTest {
-    [System.IO.DriveInfo]::GetDrives() |
-    Where-Object { $_.IsReady -eq $true -and $_.DriveType -eq "Fixed" } |
-    Select-Object Name, VolumeLabel, IsReady, DriveType, TotalFreeSpace, TotalSize |
-    Format-Table
+<# .SYNOPSIS
+    This function displays the health check banner.
+#>
+<# .DESCRIPTION
+    This function displays the health check banner.
+#>
+function Get-HealthCheckBanner { 
+    Write-Host "==========================================" -ForegroundColor Green
+    Write-Host "          System Health Check             " -ForegroundColor Green
+    Write-Host "==========================================" -ForegroundColor Green
 }
 
-#Don't look yet, ready-to-use function to get disk health information
+<# .SYNOPSIS
+    This script performs a health check on the system, including disk space, RAM usage, running services, Windows update status, and event log errors. 
+    The results are exported to a CSV file.
+#>
+<# .DESCRIPTION
+    The script checks the health of the system by performing various checks and exporting the results to a CSV file. 
+    It checks disk space, RAM usage, running services, Windows update status, and event log errors.
+#>
 function Get-DiskHealth {
-    # Get disk space information
-    $disks = Get-WmiObject Win32_LogicalDisk -Filter "DriveType=3"
-    $diskHealth = @()
-
-    foreach ($disk in $disks) {
-        $diskInfo = [PSCustomObject]@{
-            DriveLetter = $disk.DeviceID
-            FreeSpaceGB = [math]::Round($disk.FreeSpace / 1GB, 2)
-            TotalSizeGB = [math]::Round($disk.Size / 1GB, 2)
-            PercentFree = [math]::Round(($disk.FreeSpace / $disk.Size) * 100, 2)
+    $fixedDrives = [System.IO.DriveInfo]::GetDrives() | Where-Object { $_.IsReady -eq $true -and $_.DriveType -eq "Fixed" } 
+    $diskHealth = foreach ($drive in $fixedDrives) {    
+        $percentFreeSpace = [math]::Round(($drive.TotalFreeSpace / $drive.TotalSize) * 100, 1)    
+        if ($percentFreeSpace -lt 10) {
+            $status = "Critical"
         }
-        $diskHealth += $diskInfo
+        elseif ($percentFreeSpace -lt 20) {
+            $status = "Warning"
+        }
+        else {
+            $status = "OK"
+        }
+        [PSCustomObject]@{
+            Name             = $drive.Name
+            VolumeLabel      = $drive.VolumeLabel
+            IsReady          = $drive.IsReady
+            DriveType        = $drive.DriveType
+            TotalFreeSpaceGB = [math]::Round($drive.TotalFreeSpace / 1GB, 1) 
+            TotalSizeGB      = [math]::Round($drive.TotalSize / 1GB, 1) 
+            PercentFreeSpace = $percentFreeSpace 
+            Status           = $status
+        } 
     }
-
-    return $diskHealth
+    $diskHealth 
 }
