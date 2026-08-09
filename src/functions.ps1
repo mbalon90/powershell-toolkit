@@ -58,3 +58,8 @@ function Get-Functions {
         }
     }
 }
+
+function Invoke-HealthCheck {
+    Get-HealthCheckBanner
+    Get-DiskHealth | Format-Table -AutoSize
+}
