@@ -1,5 +1,6 @@
-<#API Testing playgroud.#>
-
+<# .SYNOPSIS
+    This function tests the API endpoints.
+#>
 <# .DESCRIPTION
 Returns testing API #>
 function Get-APITest {
