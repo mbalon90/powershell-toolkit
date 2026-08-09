@@ -22,3 +22,14 @@ Created api.ps1 file
 ## v0.4
 
 Cleaned up structure of changelog.md
+
+---
+
+## v0.5
+
+Improved Help descriptions
+Added Synopsis to Help Documentation
+Added new HealthCheck.ps1 script 
+Added new HealthCheck function Get-HealthCheckBanner
+Added new HealthCheck function Get-DiskHealth
+Added new HealthCheck function Invoke-HealthCheck
