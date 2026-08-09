@@ -32,4 +32,4 @@ Added Synopsis to Help Documentation
 Added new HealthCheck.ps1 script 
 Added new HealthCheck function Get-HealthCheckBanner
 Added new HealthCheck function Get-DiskHealth
-Added new HealthCheck function Invoke-HealthCheck
+Added new function Invoke-HealthCheck
