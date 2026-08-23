@@ -1,10 +1,10 @@
-<# .SYNOPSIS
+function Get-Functions {
+    <# .SYNOPSIS
     This function displays a welcome message to the user. 
 #>
-<# .DESCRIPTION 
+    <# .DESCRIPTION 
     Listing All Main Functions 
 #>
-function Get-Functions {
     $tokens = $null
     $errors = $null
     $func = [System.Management.Automation.Language.Parser]::ParseFile("$PSScriptRoot\functions.ps1", [ref]$tokens, [ref]$errors)
@@ -42,14 +42,13 @@ function Get-Functions {
         }
     }
 }
-
-<# .SYNOPSIS
+function Show-Logo {
+    <# .SYNOPSIS
     Shows welcome logo 
 #>
-<# .DESCRIPTION
-    his function displays a welcome logo with the application version. It clears the console and prints a formatted 
+    <# .DESCRIPTION
+    This function displays a welcome logo with the application version. It clears the console and prints a formatted 
 #>
-function Show-Logo {
     param(
         [string]$Version
     )
@@ -60,23 +59,42 @@ function Show-Logo {
     Write-Host $line -ForegroundColor Green
 }
 
-<# .SYNOPSIS
+function Show-Changelog {
+    <# .SYNOPSIS
     This function displays the changelog information for the application. 
 #>
-<# .DESCRIPTION 
+    <# .DESCRIPTION 
     Shows changelog information
 #>
-function Show-Changelog {
     Get-Content .\CHANGELOG.md
 }
-
-<# .SYNOPSIS
+function Invoke-HealthCheck {
+    <# .SYNOPSIS
     Invokes the health check functionality.
 #>
-<# .DESCRIPTION
+    <# .DESCRIPTION
     This function invokes the health check functionality, displaying the health check banner and checking disk health.
 #>
-function Invoke-HealthCheck {
     Get-HealthCheckBanner
     Get-DiskHealth | Format-Table -AutoSize
+}
+function Get-IPAddresses {
+    <#
+    .SYNOPSIS
+        Retrieves the local and public IP addresses of the system.
+    .DESCRIPTION
+        This function retrieves the local IPv4 address of the system (excluding loopback addresses) and the public IP address using an external service.
+    .OUTPUTS
+        A custom object containing LocalIP and PublicIP properties.
+    #>
+    $local = (Get-NetIPAddress -AddressFamily IPv4 |
+        Where-Object InterfaceAlias -NotLike '*Loopback*' |
+        Select-Object -First 1).IPAddress
+
+    $public = (Invoke-RestMethod -Uri "https://api.ipify.org").Trim()
+
+    [pscustomobject]@{
+        LocalIP  = $local
+        PublicIP = $public
+    }
 }
