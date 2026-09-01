@@ -5,9 +5,9 @@ function Get-HealthCheckBanner {
     <# .DESCRIPTION
     This function displays the health check banner.
 #>
-    Write-Host "==========================================" -ForegroundColor Green
-    Write-Host "          System Health Check             " -ForegroundColor Green
-    Write-Host "==========================================" -ForegroundColor Green
+    Write-Host "======================" -ForegroundColor Green
+    Write-Host "System Health Check" -ForegroundColor Green
+    Write-Host "======================" -ForegroundColor Green
 }
 function Get-DiskHealth {
     <# .SYNOPSIS
@@ -20,7 +20,7 @@ function Get-DiskHealth {
 #>
     $fixedDrives = [System.IO.DriveInfo]::GetDrives() | Where-Object { $_.IsReady -eq $true -and $_.DriveType -eq "Fixed" } 
     $diskHealth = foreach ($drive in $fixedDrives) {    
-        $percentFreeSpace = [math]::Round(($drive.TotalFreeSpace / $drive.TotalSize) * 100, 1)    
+        $percentFreeSpace = [math]::Round(($drive.TotalFreeSpace / $drive.TotalSize) * 100, 2)    
         if ($percentFreeSpace -lt 10) {
             $status = "Critical"
         }
@@ -51,7 +51,7 @@ function Get-RAMHealth {
     This function checks the health of the system's RAM by evaluating the percentage of memory used.
 #>
     $memory = Get-CimInstance -ClassName Win32_OperatingSystem | Select-Object TotalVisibleMemorySize, FreePhysicalMemory
-    $percentUsed = [math]::Round((($memory.TotalVisibleMemorySize - $memory.FreePhysicalMemory) / $memory.TotalVisibleMemorySize) * 100, 1)
+    $percentUsed = [math]::Round((($memory.TotalVisibleMemorySize - $memory.FreePhysicalMemory) / $memory.TotalVisibleMemorySize) * 100, 2)
   
     if ($percentUsed -gt 90) {
         $status = "Critical"
@@ -64,10 +64,40 @@ function Get-RAMHealth {
     }
 
     [PSCustomObject]@{
+        Name                     = $env:COMPUTERNAME
         FreePhysicalMemoryGB     = [math]::Round($memory.FreePhysicalMemory / 1MB, 2)
         TotalVisibleMemorySizeGB = [math]::Round($memory.TotalVisibleMemorySize / 1MB, 2) 
         PercentUsed              = $percentUsed
         Status                   = $status
     } 
 
+}
+function Get-PagingHealth {
+    <# .SYNOPSIS
+    This function checks the health of the system's paging file.
+#>  
+    <# .DESCRIPTION
+    This function checks the health of the system's paging file by evaluating the percentage of paging file used.   
+    #>
+    $paging = Get-CimInstance -ClassName Win32_PageFileUsage | Select-Object Name, AllocatedBaseSize, CurrentUsage, PeakUsage
+    $percentUsed = [math]::Round(($paging.CurrentUsage / $paging.AllocatedBaseSize) * 100, 2)
+  
+    if ($percentUsed -gt 90) {
+        $status = "Critical"
+    }
+    elseif ($percentUsed -gt 80) {
+        $status = "Warning"
+    }
+    else {
+        $status = "OK"
+    }
+
+    [PSCustomObject]@{
+        Name                = $paging.Name
+        CurrentUsageGB      = [math]::Round($paging.CurrentUsage / 1024, 2)
+        AllocatedBaseSizeGB = [math]::Round($paging.AllocatedBaseSize / 1024, 2)
+        PeakUsageGB         = [math]::Round($paging.PeakUsage / 1024, 2)
+        PercentUsed         = $percentUsed
+        Status              = $status
+    } 
 }

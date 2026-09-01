@@ -58,7 +58,6 @@ function Show-Logo {
     Write-Host " Get-Functions" -ForegroundColor Green
     Write-Host $line -ForegroundColor Green
 }
-
 function Show-Changelog {
     <# .SYNOPSIS
     This function displays the changelog information for the application. 
@@ -67,16 +66,6 @@ function Show-Changelog {
     Shows changelog information
 #>
     Get-Content .\CHANGELOG.md
-}
-function Invoke-HealthCheck {
-    <# .SYNOPSIS
-    Invokes the health check functionality.
-#>
-    <# .DESCRIPTION
-    This function invokes the health check functionality, displaying the health check banner and checking disk health.
-#>
-    Get-HealthCheckBanner
-    Get-DiskHealth | Format-Table -AutoSize
 }
 function Get-IPAddresses {
     <#
