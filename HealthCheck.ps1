@@ -9,7 +9,7 @@
 Clear-Host
 
 # Load required modules & test scripts
-. "$PSScriptRoot\scripts\hc_functions.ps1"
+. "$PSScriptRoot\src\hc_functions.ps1"
 
 $diskResults = Get-DiskHealth
 $ramResults = Get-RAMHealth
@@ -52,7 +52,7 @@ do {
         }
         4 { 
             Write-Output "Exiting the health check."
-            exit
+            return
         }
         default {
             Write-Output "Invalid choice. Please enter 1, 2, or 3."

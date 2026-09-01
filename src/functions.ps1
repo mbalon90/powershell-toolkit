@@ -52,6 +52,7 @@ function Show-Logo {
     param(
         [string]$Version
     )
+    Clear-Host
     $line = "=" * 24
     Write-Host $line -ForegroundColor Green
     Write-Host " Scripting Toolkit v$Version"-ForegroundColor Green
@@ -86,4 +87,30 @@ function Get-IPAddresses {
         LocalIP  = $local
         PublicIP = $public
     }
+}
+function Invokes-HealthCheck {
+    <# .SYNOPSIS
+    This function invokes the health check functionality, displaying the health check banner and checking disk health.
+#>
+    <# .DESCRIPTION
+    This function invokes the health check functionality, displaying the health check banner and checking disk health.
+    It provides options for a simple check, a full CLI report, or exporting the results to a CSV file.
+#>
+    #Set an alias for the health check script for easier invocation
+    [CmdletBinding()]
+    param()
+
+    $healthCheckScript = Join-Path $PSScriptRoot '..\HealthCheck.ps1'
+
+    if (-not (Test-Path -LiteralPath $healthCheckScript)) {
+        throw "HealthCheck.ps1 was not found at: $healthCheckScript"
+    }
+    & $healthCheckScript
+
+    $mainScript = Join-Path $PSScriptRoot '..\main.ps1'
+
+    if (-not (Test-Path -LiteralPath $mainScript )) {
+        throw "main.ps1 was not found at: $mainScript "
+    }
+    & $mainScript
 }

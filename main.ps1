@@ -6,12 +6,11 @@
 #>
 
 # Define the version of the application
-$Version = "0.4"
+$Version = "0.5"
 
 # Load required modules & test scripts
 . "$PSScriptRoot\src\api.ps1"
 . "$PSScriptRoot\src\functions.ps1"
-. "$PSScriptRoot\scripts\hc_functions.ps1"
 
 # Initialize the application
 Show-Logo -Version $Version
