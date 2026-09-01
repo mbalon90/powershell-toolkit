@@ -71,3 +71,31 @@ function Get-RAMHealth {
     } 
 
 }
+function Get-PagingHealth {
+    <# .SYNOPSIS
+    This function checks the health of the system's paging file.
+#>  
+    <# .DESCRIPTION
+    This function checks the health of the system's paging file by evaluating the percentage of paging file used.   
+    #>
+    $pagination = Get-CimInstance -ClassName Win32_PageFileUsage | Select-Object AllocatedBaseSize, CurrentUsage, PeakUsage
+    $percentUsed = [math]::Round(($pagination.CurrentUsage / $pagination.AllocatedBaseSize) * 100, 1)
+  
+    if ($percentUsed -gt 90) {
+        $status = "Critical"
+    }
+    elseif ($percentUsed -gt 80) {
+        $status = "Warning"
+    }
+    else {
+        $status = "OK"
+    }
+
+    [PSCustomObject]@{
+        FreeVirtualMemoryMB      = [math]::Round($pagination.CurrentUsage / 1kB, 2)
+        TotalVirtualMemorySizeMB = [math]::Round($pagination.AllocatedBaseSize / 1kB, 2)
+        FreeSpaceInPagingFilesMB = [math]::Round($pagination.PeakUsage / 1kB, 2)
+        PercentUsed              = $percentUsed
+        Status                   = $status
+    } 
+}
