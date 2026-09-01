@@ -77,6 +77,8 @@ function Invoke-HealthCheck {
 #>
     Get-HealthCheckBanner
     Get-DiskHealth | Format-Table -AutoSize
+    Get-RAMHealth | Format-Table -AutoSize
+    Get-PagingHealth | Format-Table -AutoSize
 }
 function Get-IPAddresses {
     <#

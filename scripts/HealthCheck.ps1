@@ -5,9 +5,9 @@ function Get-HealthCheckBanner {
     <# .DESCRIPTION
     This function displays the health check banner.
 #>
-    Write-Host "==========================================" -ForegroundColor Green
-    Write-Host "          System Health Check             " -ForegroundColor Green
-    Write-Host "==========================================" -ForegroundColor Green
+    Write-Host "======================" -ForegroundColor Green
+    Write-Host "System Health Check" -ForegroundColor Green
+    Write-Host "======================" -ForegroundColor Green
 }
 function Get-DiskHealth {
     <# .SYNOPSIS
@@ -92,10 +92,10 @@ function Get-PagingHealth {
     }
 
     [PSCustomObject]@{
-        FreeVirtualMemoryMB      = [math]::Round($pagination.CurrentUsage / 1kB, 2)
-        TotalVirtualMemorySizeMB = [math]::Round($pagination.AllocatedBaseSize / 1kB, 2)
-        FreeSpaceInPagingFilesMB = [math]::Round($pagination.PeakUsage / 1kB, 2)
-        PercentUsed              = $percentUsed
-        Status                   = $status
+        CurrentUsageGB      = [math]::Round($pagination.CurrentUsage / 1024, 2)
+        AllocatedBaseSizeGB = [math]::Round($pagination.AllocatedBaseSize / 1024, 2)
+        PeakUsageGB         = [math]::Round($pagination.PeakUsage / 1024, 2)
+        PercentUsed         = $percentUsed
+        Status              = $status
     } 
 }
