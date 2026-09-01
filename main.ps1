@@ -11,9 +11,7 @@ $Version = "0.4"
 # Load required modules & test scripts
 . "$PSScriptRoot\src\api.ps1"
 . "$PSScriptRoot\src\functions.ps1"
-
-# Load the health check script
-. "$PSScriptRoot\scripts\HealthCheck.ps1"
+. "$PSScriptRoot\scripts\hc_functions.ps1"
 
 # Initialize the application
 Show-Logo -Version $Version

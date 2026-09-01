@@ -20,7 +20,7 @@ function Get-DiskHealth {
 #>
     $fixedDrives = [System.IO.DriveInfo]::GetDrives() | Where-Object { $_.IsReady -eq $true -and $_.DriveType -eq "Fixed" } 
     $diskHealth = foreach ($drive in $fixedDrives) {    
-        $percentFreeSpace = [math]::Round(($drive.TotalFreeSpace / $drive.TotalSize) * 100, 1)    
+        $percentFreeSpace = [math]::Round(($drive.TotalFreeSpace / $drive.TotalSize) * 100, 2)    
         if ($percentFreeSpace -lt 10) {
             $status = "Critical"
         }
@@ -51,7 +51,7 @@ function Get-RAMHealth {
     This function checks the health of the system's RAM by evaluating the percentage of memory used.
 #>
     $memory = Get-CimInstance -ClassName Win32_OperatingSystem | Select-Object TotalVisibleMemorySize, FreePhysicalMemory
-    $percentUsed = [math]::Round((($memory.TotalVisibleMemorySize - $memory.FreePhysicalMemory) / $memory.TotalVisibleMemorySize) * 100, 1)
+    $percentUsed = [math]::Round((($memory.TotalVisibleMemorySize - $memory.FreePhysicalMemory) / $memory.TotalVisibleMemorySize) * 100, 2)
   
     if ($percentUsed -gt 90) {
         $status = "Critical"
@@ -64,6 +64,7 @@ function Get-RAMHealth {
     }
 
     [PSCustomObject]@{
+        Name                     = $env:COMPUTERNAME
         FreePhysicalMemoryGB     = [math]::Round($memory.FreePhysicalMemory / 1MB, 2)
         TotalVisibleMemorySizeGB = [math]::Round($memory.TotalVisibleMemorySize / 1MB, 2) 
         PercentUsed              = $percentUsed
@@ -78,8 +79,8 @@ function Get-PagingHealth {
     <# .DESCRIPTION
     This function checks the health of the system's paging file by evaluating the percentage of paging file used.   
     #>
-    $pagination = Get-CimInstance -ClassName Win32_PageFileUsage | Select-Object AllocatedBaseSize, CurrentUsage, PeakUsage
-    $percentUsed = [math]::Round(($pagination.CurrentUsage / $pagination.AllocatedBaseSize) * 100, 1)
+    $paging = Get-CimInstance -ClassName Win32_PageFileUsage | Select-Object Name, AllocatedBaseSize, CurrentUsage, PeakUsage
+    $percentUsed = [math]::Round(($paging.CurrentUsage / $paging.AllocatedBaseSize) * 100, 2)
   
     if ($percentUsed -gt 90) {
         $status = "Critical"
@@ -92,10 +93,26 @@ function Get-PagingHealth {
     }
 
     [PSCustomObject]@{
-        CurrentUsageGB      = [math]::Round($pagination.CurrentUsage / 1024, 2)
-        AllocatedBaseSizeGB = [math]::Round($pagination.AllocatedBaseSize / 1024, 2)
-        PeakUsageGB         = [math]::Round($pagination.PeakUsage / 1024, 2)
+        Name                = $paging.Name
+        CurrentUsageGB      = [math]::Round($paging.CurrentUsage / 1024, 2)
+        AllocatedBaseSizeGB = [math]::Round($paging.AllocatedBaseSize / 1024, 2)
+        PeakUsageGB         = [math]::Round($paging.PeakUsage / 1024, 2)
         PercentUsed         = $percentUsed
         Status              = $status
     } 
+}
+function Invoke-HealthCheck {
+    <# .SYNOPSIS
+    Gathers the health check data for Health Check script.
+#>
+    <# .DESCRIPTION
+    This function gathers the health check data.
+#>
+    $diskResults = Get-DiskHealth
+    $ramResults = Get-RAMHealth
+    $pagingResults = Get-PagingHealth
+
+    $diskResults | Add-Member -NotePropertyName Category -NotePropertyValue "Disk"
+    $ramResults | Add-Member -NotePropertyName Category -NotePropertyValue "RAM"
+    $pagingResults | Add-Member -NotePropertyName Category -NotePropertyValue "Paging"
 }
