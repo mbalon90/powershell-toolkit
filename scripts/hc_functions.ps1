@@ -101,18 +101,3 @@ function Get-PagingHealth {
         Status              = $status
     } 
 }
-function Invoke-HealthCheck {
-    <# .SYNOPSIS
-    Gathers the health check data for Health Check script.
-#>
-    <# .DESCRIPTION
-    This function gathers the health check data.
-#>
-    $diskResults = Get-DiskHealth
-    $ramResults = Get-RAMHealth
-    $pagingResults = Get-PagingHealth
-
-    $diskResults | Add-Member -NotePropertyName Category -NotePropertyValue "Disk"
-    $ramResults | Add-Member -NotePropertyName Category -NotePropertyValue "RAM"
-    $pagingResults | Add-Member -NotePropertyName Category -NotePropertyValue "Paging"
-}
