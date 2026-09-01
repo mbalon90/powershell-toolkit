@@ -88,7 +88,7 @@ function Get-IPAddresses {
         PublicIP = $public
     }
 }
-function Invokes-HealthCheck {
+function Invoke-HealthCheck {
     <# .SYNOPSIS
     This function invokes the health check functionality, displaying the health check banner and checking disk health.
 #>

@@ -13,6 +13,8 @@ The main goal is to:
 ## Repository structure
 - `main.ps1` — entry point script.
 - `functions.ps1` — helper functions and supporting logic.
+- `hc_functions.ps1` — helper functions for HealthCheck.ps1 script.
+- `HealthCheck.ps1` - script for performing system health checks
 - `CHANGELOG.md` — version history and changes.
 - `README.md` — repository overview and usage notes.
 
