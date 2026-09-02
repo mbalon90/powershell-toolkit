@@ -35,6 +35,11 @@
 - Added new HealthCheck.ps1 script 
 - Added new HealthCheck function Get-HealthCheckBanner
 - Added new HealthCheck function Get-DiskHealth
-- Added new function Invoke-HealthCheck
+- Added new script HealthCheck.ps1
 
 ---
+
+## v0.6
+
+- Integrated script HealthCheck.ps1 with main.ps1 logic
+- Added swtich menu for both HealthCheck.ps1 and main.ps1 scripts

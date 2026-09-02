@@ -23,7 +23,6 @@ function Show-Logo {
     param(
         [string]$Version
     )
-    Clear-Host
     Set-Banner -title "Scripting Toolkit v$Version `nGet-Functions"
 }
 function Get-Functions {
