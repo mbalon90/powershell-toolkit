@@ -5,9 +5,6 @@
     This script invokes the health check functionality, displaying the health check banner and checking disk health.
 #>
 
-#Prepare the environment
-Clear-Host
-
 # Load required modules & test scripts
 . "$PSScriptRoot\hc_functions.ps1"
 
@@ -26,6 +23,7 @@ $allResults = $diskResults + $ramResults + $pagingResults + $cpuResults
 $simpleReport = $allResults | Select-Object Category, Name, Status 
 
 do {
+    Clear-Host
     Set-Banner -title "System Health Check"
     Write-Output "Please provide which health check you would like to perform:"
     $menuOptions = @(
@@ -39,32 +37,37 @@ do {
 
     switch ($choice) {
         1 { 
-    
+            Clear-Host
+            Set-Banner -title "Health Check Simple Report"
             $simpleReport | Format-Table -AutoSize
+            Read-Host "Press Enter to return to the menu"
         }
         2 { 
-            Set-Banner -title "Disks"
+            Clear-Host
+            Set-Banner -title "Health Check Full Report"
             $diskResults | Format-Table -AutoSize
-            Set-Banner -title "RAM"
             $ramResults | Format-Table -AutoSize
-            Set-Banner -title "Paging"
             $pagingResults | Format-Table -AutoSize
-            Set-Banner -title "CPU"
             $cpuResults | Format-Table -AutoSize
+            Read-Host "Press Enter to return to the menu"
         
         }
         3 { 
+            Clear-Host
+            Set-Banner -title "Export Results to CSV"
             Write-Host "Please provide the path where you would like to export the CSV file (e.g., C:\Reports\HealthCheckReport.csv):"
             $csvPath = Read-Host "Enter the CSV file path"
             $simpleReport | Export-Csv -Path $csvPath -NoTypeInformation
-            Write-Output "Health check results exported to $csvPath"
+            Write-Host "Health check results exported to $csvPath" -ForegroundColor Green
+            Read-Host "Press Enter to return to the menu"
         }
         4 { 
-            Write-Output "Exiting the health check."
+            Write-Host "Exiting the health check..." -ForegroundColor Green
             return
         }
         default {
-            Write-Output "Invalid choice. Please enter 1, 2, or 3."
+            Write-Host "Invalid choice. Please enter 1, 2, or 3." -ForegroundColor Red
         }
     }
 } while ($true) 
+Clear-Host

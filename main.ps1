@@ -12,11 +12,9 @@ $Version = "0.7"
 . "$PSScriptRoot\src\api.ps1"
 . "$PSScriptRoot\src\functions.ps1"
 
-# Clear the console
-Clear-Host
-
 # Initialize the application
 do {
+    Clear-Host
     Show-Logo -Version $Version
     Write-Output "Welcome to the PowerShell Toolkit!"
     Write-Output "Please select an option:"
@@ -24,10 +22,11 @@ do {
         "1. Health Check"
         "2. Get Functions"
         "3. Enter CLI Mode"
-        "4. Exit"
+        "4. Show Changelog"
+        "5. Exit"
     )
     $menuOptions
-    $choice = Read-Host "Enter your choice (1, 2, 3, or 4)"
+    $choice = Read-Host "Enter your choice (1, 2, 3, 4, or 5)"
 
     switch ($choice) {
         1 { 
@@ -36,9 +35,10 @@ do {
             Read-Host "Press Enter to return to the menu"
         }
         2 { 
+            Clear-Host
+            Set-Banner -title "Scripting Toolkit Functions"
             Get-Functions | Format-Table -AutoSize | Out-Host
             Read-Host "Press Enter to return to the menu"
-            
         }
         3 { 
             $originalPrompt = (Get-Item Function:prompt).ScriptBlock
@@ -51,11 +51,16 @@ do {
             Write-Host "Exiting CLI mode..." -foregroundcolor Green
             Set-Item Function:\prompt -Value $originalPrompt
             Read-Host "Press Enter to return to the menu"
-            Clear-Host
         }
-        4 { 
-            Write-Host "Exiting the application. Goodbye!" -foregroundcolor Green
+        4 {
+            Clear-Host
+            Set-Banner -title "Scripting Toolkit Changelog"
+            Show-Changelog
             Read-Host "Press Enter to return to the menu"
+        }
+        5 {
+            Write-Host "Exiting the application. Goodbye!" -foregroundcolor Green
+            Read-Host "Press Enter to return to the menu"           
             Clear-Host
             return
         }
@@ -65,4 +70,3 @@ do {
         }
     }
 } while ($true)
-#Show-Logo -Version $Version

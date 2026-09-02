@@ -9,9 +9,9 @@ function Set-Banner {
         [string]$title
     )
     Write-Host ""
-    Write-Host "===========================" -ForegroundColor Green
+    Write-Host "===============================" -ForegroundColor Green
     Write-Host "$title" -ForegroundColor Green
-    Write-Host "===========================" -ForegroundColor Green
+    Write-Host "===============================" -ForegroundColor Green
 }
 function Show-Logo {
     <# .SYNOPSIS
