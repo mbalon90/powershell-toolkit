@@ -13,6 +13,9 @@ $Version = "0.6"
 . "$PSScriptRoot\src\functions.ps1"
 . "$PSScriptRoot\src\hc_functions.ps1"
 
+# Clear the console
+Clear-Host
+
 # Initialize the application
 do {
     Show-Logo -Version $Version
