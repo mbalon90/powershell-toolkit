@@ -55,6 +55,8 @@
 - Reworked Invoke-HealthCheck to combine and tag results by Category
 - Reworked Invoke-HealthCheck to combine and tag results by Category
 
+---
+
 ## v0.7
 
 - Moved HealthCheck.ps1, hc_functions.ps1, and HealthCheck.md into a dedicated src/HealthCheck/ module folder
