@@ -116,11 +116,4 @@ function Invoke-HealthCheck {
         throw "HealthCheck.ps1 was not found at: $healthCheckScript"
     }
     & $healthCheckScript
-
-    $mainScript = Join-Path $PSScriptRoot '..\main.ps1'
-
-    if (-not (Test-Path -LiteralPath $mainScript )) {
-        throw "main.ps1 was not found at: $mainScript "
-    }
-    & $mainScript
 }
