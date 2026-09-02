@@ -6,7 +6,7 @@
 #>
 
 # Define the version of the application
-$Version = "0.6"
+$Version = "0.7"
 
 # Load required modules & test scripts
 . "$PSScriptRoot\src\api.ps1"
@@ -32,7 +32,7 @@ do {
     switch ($choice) {
         1 { 
             # Invoke the health check functionality
-            . "$PSScriptRoot\HealthCheck\HealthCheck.ps1"
+            . "$PSScriptRoot\src\HealthCheck\HealthCheck.ps1"
             Read-Host "Press Enter to return to the menu"
         }
         2 { 

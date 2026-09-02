@@ -54,3 +54,10 @@
 - Integrated script HealthCheck.ps1 with main.ps1 logic
 - Reworked Invoke-HealthCheck to combine and tag results by Category
 - Reworked Invoke-HealthCheck to combine and tag results by Category
+
+## v0.7
+
+- Moved HealthCheck.ps1, hc_functions.ps1, and HealthCheck.md into a dedicated src/HealthCheck/ module folder
+- Consolidated Invoke-HealthCheck into hc_functions.ps1
+- Updated all dot-source paths in main.ps1, HealthCheck.ps1, and functions.ps1 to reflect new structure
+- Updated README.md and HealthCheck.md to match new file layout

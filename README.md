@@ -20,11 +20,11 @@ The main goal is to:
 ## Repository structure
 
 - `main.ps1` — entry point script; launches the interactive menu.
-- `HealthCheck.ps1` — script for performing system health checks (disk, RAM, paging, CPU), with menu options for summary view, full report, and CSV export.
-- `src/functions.ps1` — general helper functions and supporting logic, including `Invoke-HealthCheck`.
-- `src/hc_functions.ps1` — health check functions used by `HealthCheck.ps1` (`Get-DiskHealth`, `Get-RAMHealth`, `Get-PagingHealth`, `Get-CPUHealth`, `Get-HealthCheckBanner`).
+- `src/functions.ps1` — general helper functions and supporting logic.
 - `src/api.ps1` — functions for API-related testing/utilities.
-- `docs/HealthCheck.md` — detailed documentation for the health check functionality.
+- `src/HealthCheck/HealthCheck.ps1` — script for performing system health checks (disk, RAM, paging, CPU), with menu options for summary view, full report, and CSV export.
+- `src/HealthCheck/hc_functions.ps1` — health check functions (`Get-DiskHealth`, `Get-RAMHealth`, `Get-PagingHealth`, `Get-CPUHealth`, `Get-HealthCheckBanner`, `Invoke-HealthCheck`).
+- `src/HealthCheck/HealthCheck.md` — detailed documentation for the health check module.
 - `CHANGELOG.md` — version history and changes.
 - `README.md` — repository overview and usage notes.
 
