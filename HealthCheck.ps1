@@ -24,7 +24,7 @@ $pagingResults | Add-Member -NotePropertyName Category -NotePropertyValue "Pagin
 $cpuResults | Add-Member -NotePropertyName Category -NotePropertyValue "CPU"
 
 $allResults = $diskResults + $ramResults + $pagingResults + $cpuResults
-$allReport = $allResults | Select-Object Category, Name, Status 
+$simpleReport = $allResults | Select-Object Category, Name, Status 
 
 do {
     Set-Banner -title "System Health Check"
@@ -41,7 +41,7 @@ do {
     switch ($choice) {
         1 { 
     
-            $allReport | Format-Table -AutoSize
+            $simpleReport | Format-Table -AutoSize
         }
         2 { 
             Set-Banner -title "Disks"
@@ -57,7 +57,7 @@ do {
         3 { 
             Write-Host "Please provide the path where you would like to export the CSV file (e.g., C:\Reports\HealthCheckReport.csv):"
             $csvPath = Read-Host "Enter the CSV file path"
-            $allReport | Export-Csv -Path $csvPath -NoTypeInformation
+            $simpleReport | Export-Csv -Path $csvPath -NoTypeInformation
             Write-Output "Health check results exported to $csvPath"
         }
         4 { 
