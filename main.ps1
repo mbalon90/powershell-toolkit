@@ -6,12 +6,11 @@
 #>
 
 # Define the version of the application
-$Version = "0.6"
+$Version = "0.7"
 
 # Load required modules & test scripts
 . "$PSScriptRoot\src\api.ps1"
 . "$PSScriptRoot\src\functions.ps1"
-. "$PSScriptRoot\src\hc_functions.ps1"
 
 # Clear the console
 Clear-Host
@@ -33,7 +32,7 @@ do {
     switch ($choice) {
         1 { 
             # Invoke the health check functionality
-            . "$PSScriptRoot\HealthCheck.ps1"
+            . "$PSScriptRoot\src\HealthCheck\HealthCheck.ps1"
             Read-Host "Press Enter to return to the menu"
         }
         2 { 

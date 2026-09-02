@@ -6,10 +6,10 @@ Performs a system health check across disk space, physical RAM, page file usage,
 
 Run directly:
 ```powershell
-.\HealthCheck.ps1
+.\src\HealthCheck\HealthCheck.ps1
 ```
 
-Or invoke from the main menu (`main.ps1` → Health Check), or call `Invoke-HealthCheck` directly if `src/functions.ps1` is dot-sourced.
+Or invoke from the main menu (`main.ps1` → Health Check), or call `Invoke-HealthCheck` directly if `src\HealthCheck\hc_functions.ps1` is dot-sourced.
 
 On running, you'll be prompted to choose:
 1. **Simple Check** — lists only items with a non-OK status (Warning/Critical).
