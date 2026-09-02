@@ -39,18 +39,26 @@ do {
             
         }
         3 { 
-            Write-Output "Entering CLI mode..."
+            $originalPrompt = (Get-Item Function:prompt).ScriptBlock
+            Clear-Host
+            Set-Banner -title "Scripting Toolkit CLI mode `nGet-Functions"
+            function prompt {
+                "CLI Mode> "
+            }
+            $host.EnterNestedPrompt()
+            Write-Host "Exiting CLI mode..." -foregroundcolor Green
+            Set-Item Function:\prompt -Value $originalPrompt
             Read-Host "Press Enter to return to the menu"
-            # Add CLI mode logic here
-
+            Clear-Host
         }
         4 { 
-            Write-Output "Exiting the application. Goodbye!"
+            Write-Host "Exiting the application. Goodbye!" -foregroundcolor Green
             Read-Host "Press Enter to return to the menu"
+            Clear-Host
             return
         }
         default {
-            Write-Output "Invalid choice. Please try again."
+            Write-Host "Invalid choice. Please try again." -foregroundcolor Red
             Read-Host "Press Enter to return to the menu"
         }
     }

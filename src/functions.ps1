@@ -9,9 +9,9 @@ function Set-Banner {
         [string]$title
     )
     Write-Host ""
-    Write-Host "======================" -ForegroundColor Green
+    Write-Host "===========================" -ForegroundColor Green
     Write-Host "$title" -ForegroundColor Green
-    Write-Host "======================" -ForegroundColor Green
+    Write-Host "===========================" -ForegroundColor Green
 }
 function Show-Logo {
     <# .SYNOPSIS
@@ -23,7 +23,7 @@ function Show-Logo {
     param(
         [string]$Version
     )
-    Set-Banner -title "Scripting Toolkit v$Version `nGet-Functions"
+    Set-Banner -title "Scripting Toolkit v$Version"
 }
 function Get-Functions {
     <# .SYNOPSIS
