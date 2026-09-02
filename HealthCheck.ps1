@@ -11,6 +11,7 @@ Clear-Host
 # Load required modules & test scripts
 . "$PSScriptRoot\src\hc_functions.ps1"
 
+#define the health check functions Categories
 $diskResults = Get-DiskHealth
 $ramResults = Get-RAMHealth
 $pagingResults = Get-PagingHealth
@@ -18,6 +19,9 @@ $pagingResults = Get-PagingHealth
 $diskResults | Add-Member -NotePropertyName Category -NotePropertyValue "Disk"
 $ramResults | Add-Member -NotePropertyName Category -NotePropertyValue "RAM"
 $pagingResults | Add-Member -NotePropertyName Category -NotePropertyValue "Paging"
+
+$allResults = $diskResults + $ramResults + $pagingResults
+$allReport = $allResults | Select-Object Category, Name, Status 
 
 do {
     Get-HealthCheckBanner
@@ -34,8 +38,7 @@ do {
     switch ($choice) {  
         1 { 
     
-            $allResults = $diskResults + $ramResults + $pagingResults
-            $allResults | Select-Object Category, Name, Status | Format-Table -AutoSize
+            $allReport | Format-Table -AutoSize
         }
         2 { 
             $diskResults | Format-Table -AutoSize
@@ -46,8 +49,7 @@ do {
         3 { 
             Write-Host "Please provide the path where you would like to export the CSV file (e.g., C:\Reports\HealthCheckReport.csv):"
             $csvPath = Read-Host "Enter the CSV file path"
-            $allResults = $diskResults + $ramResults + $pagingResults
-            $allResults | Select-Object Category, Name, Status | Export-Csv -Path $csvPath -NoTypeInformation
+            $allReport  | Export-Csv -Path $csvPath -NoTypeInformation
             Write-Output "Health check results exported to $csvPath"
         }
         4 { 
