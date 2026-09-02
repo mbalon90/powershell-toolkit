@@ -63,3 +63,4 @@
 - Consolidated Invoke-HealthCheck into hc_functions.ps1
 - Updated all dot-source paths in main.ps1, HealthCheck.ps1, and functions.ps1 to reflect new structure
 - Updated README.md and HealthCheck.md to match new file layout
+- Fixed switch loops logic in main.ps1 and HealthCheck.ps1
