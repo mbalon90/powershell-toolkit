@@ -10,7 +10,7 @@ Clear-Host
 
 # Load required modules & test scripts
 . "$PSScriptRoot\src\functions.ps1"
-. "$PSScriptRoot\src\hc_functions.ps1"
+. "$PSScriptRoot\src\HealthCheck\hc_functions.ps1"
 
 #Define the health check functions
 $diskResults = Get-DiskHealth

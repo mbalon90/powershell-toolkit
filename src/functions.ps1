@@ -98,22 +98,3 @@ function Get-IPAddresses {
         PublicIP = $public
     }
 }
-function Invoke-HealthCheck {
-    <# .SYNOPSIS
-    This function invokes the health check functionality, displaying the health check banner and checking disk health.
-#>
-    <# .DESCRIPTION
-    This function invokes the health check functionality, displaying the health check banner and checking disk health.
-    It provides options for a simple check, a full CLI report, or exporting the results to a CSV file.
-#>
-    #Set an alias for the health check script for easier invocation
-    [CmdletBinding()]
-    param()
-
-    $healthCheckScript = Join-Path $PSScriptRoot '..\HealthCheck.ps1'
-
-    if (-not (Test-Path -LiteralPath $healthCheckScript)) {
-        throw "HealthCheck.ps1 was not found at: $healthCheckScript"
-    }
-    & $healthCheckScript
-}
