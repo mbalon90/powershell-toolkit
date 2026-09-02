@@ -1,3 +1,31 @@
+function Set-Banner { 
+    <# .SYNOPSIS
+    This function displays the defined banner.
+#>
+    <# .DESCRIPTION
+    This function displays the defined banner.
+#>
+    param   (
+        [string]$title
+    )
+    Write-Host ""
+    Write-Host "======================" -ForegroundColor Green
+    Write-Host "$title" -ForegroundColor Green
+    Write-Host "======================" -ForegroundColor Green
+}
+function Show-Logo {
+    <# .SYNOPSIS
+    Shows welcome logo 
+#>
+    <# .DESCRIPTION
+    This function displays a welcome logo with the application version. It clears the console and prints a formatted 
+#>
+    param(
+        [string]$Version
+    )
+    Clear-Host
+    Set-Banner -title "Scripting Toolkit v$Version `nGet-Functions"
+}
 function Get-Functions {
     <# .SYNOPSIS
     This function displays a welcome message to the user. 
@@ -41,23 +69,6 @@ function Get-Functions {
             Description = if ($description.Length -gt 50) { $description.Substring(0, 47) + '...' } else { $description }
         }
     }
-}
-function Show-Logo {
-    <# .SYNOPSIS
-    Shows welcome logo 
-#>
-    <# .DESCRIPTION
-    This function displays a welcome logo with the application version. It clears the console and prints a formatted 
-#>
-    param(
-        [string]$Version
-    )
-    Clear-Host
-    $line = "=" * 24
-    Write-Host $line -ForegroundColor Green
-    Write-Host " Scripting Toolkit v$Version"-ForegroundColor Green
-    Write-Host " Get-Functions" -ForegroundColor Green
-    Write-Host $line -ForegroundColor Green
 }
 function Show-Changelog {
     <# .SYNOPSIS

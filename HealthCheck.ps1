@@ -9,25 +9,28 @@
 Clear-Host
 
 # Load required modules & test scripts
+. "$PSScriptRoot\src\functions.ps1"
 . "$PSScriptRoot\src\hc_functions.ps1"
 
-#define the health check functions Categories
+#Define the health check functions
 $diskResults = Get-DiskHealth
 $ramResults = Get-RAMHealth
 $pagingResults = Get-PagingHealth
+$cpuResults = Get-CPUHealth
 
 $diskResults | Add-Member -NotePropertyName Category -NotePropertyValue "Disk"
 $ramResults | Add-Member -NotePropertyName Category -NotePropertyValue "RAM"
 $pagingResults | Add-Member -NotePropertyName Category -NotePropertyValue "Paging"
+$cpuResults | Add-Member -NotePropertyName Category -NotePropertyValue "CPU"
 
-$allResults = $diskResults + $ramResults + $pagingResults
+$allResults = $diskResults + $ramResults + $pagingResults + $cpuResults
 $allReport = $allResults | Select-Object Category, Name, Status 
 
 do {
-    Get-HealthCheckBanner
+    Set-Banner -title "System Health Check"
     Write-Output "Please provide which health check you would like to perform:"
     $menuOptions = @(
-        "1. Simple Check"
+        "1. Simple CLI Check"
         "2. Full CLI Report"
         "3. Export to CSV"
         "4. Exit"
@@ -35,21 +38,26 @@ do {
     $menuOptions
     $choice = Read-Host "Enter your choice (1, 2, or 3)"
 
-    switch ($choice) {  
+    switch ($choice) {
         1 { 
     
             $allReport | Format-Table -AutoSize
         }
         2 { 
+            Set-Banner -title "Disks"
             $diskResults | Format-Table -AutoSize
+            Set-Banner -title "RAM"
             $ramResults | Format-Table -AutoSize
+            Set-Banner -title "Paging"
             $pagingResults | Format-Table -AutoSize
+            Set-Banner -title "CPU"
+            $cpuResults | Format-Table -AutoSize
         
         }
         3 { 
             Write-Host "Please provide the path where you would like to export the CSV file (e.g., C:\Reports\HealthCheckReport.csv):"
             $csvPath = Read-Host "Enter the CSV file path"
-            $allReport  | Export-Csv -Path $csvPath -NoTypeInformation
+            $allReport | Export-Csv -Path $csvPath -NoTypeInformation
             Write-Output "Health check results exported to $csvPath"
         }
         4 { 

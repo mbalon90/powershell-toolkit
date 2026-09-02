@@ -1,14 +1,3 @@
-function Get-HealthCheckBanner { 
-    <# .SYNOPSIS
-    This function displays the health check banner.
-#>
-    <# .DESCRIPTION
-    This function displays the health check banner.
-#>
-    Write-Host "======================" -ForegroundColor Green
-    Write-Host "System Health Check" -ForegroundColor Green
-    Write-Host "======================" -ForegroundColor Green
-}
 function Get-DiskHealth {
     <# .SYNOPSIS
     This script performs a health check on the system, including disk space, RAM usage, running services, Windows update status, and event log errors. 
@@ -35,8 +24,8 @@ function Get-DiskHealth {
             VolumeLabel      = $drive.VolumeLabel
             IsReady          = $drive.IsReady
             DriveType        = $drive.DriveType
-            TotalFreeSpaceGB = [math]::Round($drive.TotalFreeSpace / 1MB, 2) 
-            TotalSizeGB      = [math]::Round($drive.TotalSize / 1MB, 2) 
+            TotalFreeSpaceGB = [math]::Round($drive.TotalFreeSpace / 1GB, 2) 
+            TotalSizeGB      = [math]::Round($drive.TotalSize / 1GB, 2) 
             PercentFreeSpace = $percentFreeSpace 
             Status           = $status
         } 
@@ -100,4 +89,36 @@ function Get-PagingHealth {
         PercentUsed         = $percentUsed
         Status              = $status
     } 
+}
+function Get-CPUHealth {    
+    <# .SYNOPSIS
+    This function checks the health of the system's CPU.
+#>
+    <# .DESCRIPTION
+    This function checks the health of the system's CPU by evaluating the percentage of CPU usage.  
+#>
+    $fixedCpu = Get-CimInstance -ClassName Win32_Processor | Select-Object Name, LoadPercentage, Status
+    $cpuHealth = foreach ($cpu in $fixedCpu) {  
+        $percentUsed = $cpu.LoadPercentage
+  
+        if ($null -eq $percentUsed) {
+            $status = "Unknown"
+        }
+        elseif ($percentUsed -gt 90) {
+            $status = "Critical"
+        }
+        elseif ($percentUsed -gt 80) {
+            $status = "Warning"
+        }
+        else {
+            $status = "OK"
+        }
+
+        [PSCustomObject]@{
+            Name           = $cpu.Name
+            LoadPercentage = $percentUsed
+            Status         = $status
+        } 
+    }
+    $cpuHealth
 }
